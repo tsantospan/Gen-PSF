@@ -22,31 +22,31 @@ def train(nz=20, training_s="1619", mode_eq="log"):
 
     # Root directory for dataset
     if training_s == "1619": #H23 
-        dataroot = "../../data/2016_to_2019/base_train/"+mode_eq+"_train/" 
+        dataroot = "../data/H23_2016_2019/base_train/"+mode_eq+"/train/" 
     elif training_s == "1617": #H23
-        dataroot = "../../data/2016_2017/base_train/"+mode_eq+"_train/" 
+        dataroot = "../data/H23_2016_2017/base_train/"+mode_eq+"/train/" 
     elif training_s == "1719": #K12
-        dataroot = "../../data/k12_2017_to_2019/base_train/"+mode_eq+"_train/" 
+        dataroot = "../data/K12_2017_2019/base_train/"+mode_eq+"/train/" 
 
     if training_s == "1719":
-        suffix = "_k12"
+        suffix = "_K12"
     else:
-        suffix = ""
+        suffix = "_H23"
 
     # Gain of the detector
     gamma = 1.75
     # Statistics on the PSF sums (alphas) and number of frames (N)
-    alphas_Ns = torch.Tensor(np.load("../../data/alphas_Ns_"+training_s+suffix+".npy"))
+    alphas_Ns = torch.Tensor(np.load("../data/alphas_Ns_"+training_s+suffix+".npy"))
     Ns = alphas_Ns[1,:]
     alphas = alphas_Ns[0,:]
 
     # Mean and std images (for whitening)
-    MEAN = torch.Tensor(np.load("../../data/MEAN_"+training_s+suffix+".npy")).to(device)
-    STD = torch.Tensor(np.load("../../data/STD_"+training_s+suffix+".npy")).to(device)
+    MEAN = torch.Tensor(np.load("../data/statistics/MEAN_"+training_s+suffix+".npy")).to(device)
+    STD = torch.Tensor(np.load("../data/statistics/STD_"+training_s+suffix+".npy")).to(device)
 
     # Read-out noise maps
-    ron0 = torch.Tensor(np.load("../../data/ron1_0_128.npy").astype(np.float32))
-    ron1 = torch.Tensor(np.load("../../data/ron1_1_128.npy").astype(np.float32))
+    ron0 = torch.Tensor(np.load("../data/statistics/ron1_0_128.npy").astype(np.float32))
+    ron1 = torch.Tensor(np.load("../data/statistics/ron1_1_128.npy").astype(np.float32))
 
 
 
