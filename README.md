@@ -66,17 +66,3 @@ The second subfolder contains a notebook to illustrate the denoising with the ge
 
 ## Folder **results**
 We provide here already computed results of PSF denoising. They are the denoised PSF that are presented in the article in Section 5. There is one folder for each corresponding obersved object (PDS 70, SAO 206462, HIP 72192 and HIP 80019). In each folder there are two subfolders corresponding to the denoising obtained with a generator trained with either whitened PSF or log-equalized PSF. In each subfolder, we show the PSF denoised with either the generator trained in 2024 or 2025, or a zoom on the 64 $\times$ 64 pixels at the center.
-
-
-
-
-
-
-
-
-notebook :
-only with K12, with two filters, one or two frames
-
-may need manual recentering 0 (35 percentile)
-
-version 2024 and 2025
