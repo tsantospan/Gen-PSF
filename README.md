@@ -61,6 +61,8 @@ The first subfolder *training* contains two files :
   - mode_eq : the equalization (white or log)
   
   Example use : `python3 training_wgan.py --nz 20 --training_s 1619 --mode_eq white`
+The code in this folder is adapted from the WGAN-GP implementation in [this repo]( git@github.com:Zeleni9/pytorch-wgan.git).
+
 
 The second subfolder contains a notebook to illustrate the denoising with the generator. It works with PSF observed with K1 and K2 filters, with one or two frames.
 
