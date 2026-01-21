@@ -19,7 +19,7 @@ More details will be provided.
 
 ## Downloading raw data
 
-Part of the raw data is directly stored in the repo, because of the small volumes it taekes . It is the case for the statistics of the PSF (used for noise simulation and equalization), examples of real PSF and their denoised counterparts (see the article).
+Part of the raw data is directly stored in the repo, because of the small volumes it takes . It is the case for the statistics of the PSF (used for noise simulation and equalization), examples of real PSF and their denoised counterparts (see the article).
 
 The rest of raw data (training and test sets, already trained generators that are used in the article) must be downloaded with the script.
 
