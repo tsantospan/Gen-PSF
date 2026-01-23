@@ -18,15 +18,30 @@ def train(nz=20, training_s="1619", mode_eq="log"):
     # training_s is the training set used : "1719" for K12 / "1619" and "1617" for H23
     # mode_eq is to chose the equalization (white or log)
     
-    bs = 64 # batch size
+    # Number of workers for dataloader
+    workers = 2
+
+    # Batch size during training
+    batch_size = 64
+
+    # Spatial size of training images. All images will be resized to this
+    # size using a transformer if needed.
+    image_size = 128
+
+    # Number of GPUs available. Use 0 for CPU mode.
+    ngpu = 1
+    # Decide which device we want to run on
+    device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
+
+    print("Device : ", device)
 
     # Root directory for dataset
     if training_s == "1619": #H23 
-        dataroot = "./data/H23_2016_2019/base_train/"+mode_eq+"/train/" 
+        dataroot = "../../data/sets/H23_2016_2019/"+mode_eq+"/train/" 
     elif training_s == "1617": #H23
-        dataroot = "./data/H23_2016_2017/base_train/"+mode_eq+"/train/" 
+        dataroot = "../../data/sets/H23_2016_2017/"+mode_eq+"/train/" 
     elif training_s == "1719": #K12
-        dataroot = "./data/K12_2017_2019/base_train/"+mode_eq+"/train/" 
+        dataroot = "../../data/sets/K12_2017_2019/"+mode_eq+"/train/" 
 
     if training_s == "1719":
         suffix = "_K12"
@@ -36,17 +51,17 @@ def train(nz=20, training_s="1619", mode_eq="log"):
     # Gain of the detector
     gamma = 1.75
     # Statistics on the PSF sums (alphas) and number of frames (N)
-    alphas_Ns = torch.Tensor(np.load("./data/alphas_Ns_"+training_s+suffix+".npy"))
+    alphas_Ns = torch.Tensor(np.load("../../data/statistics/alphas_Ns_"+training_s+suffix+".npy"))
     Ns = alphas_Ns[1,:]
     alphas = alphas_Ns[0,:]
 
     # Mean and std images (for whitening)
-    MEAN = torch.Tensor(np.load("./data/statistics/MEAN_"+training_s+suffix+".npy")).to(device)
-    STD = torch.Tensor(np.load("./data/statistics/STD_"+training_s+suffix+".npy")).to(device)
+    MEAN = torch.Tensor(np.load("../../data/statistics/MEAN_"+training_s+suffix+".npy")).to(device)
+    STD = torch.Tensor(np.load("../../data/statistics/STD_"+training_s+suffix+".npy")).to(device)
 
     # Read-out noise maps
-    ron0 = torch.Tensor(np.load("./data/statistics/ron1_0_128.npy").astype(np.float32))
-    ron1 = torch.Tensor(np.load("./data/statistics/ron1_1_128.npy").astype(np.float32))
+    ron0 = torch.Tensor(np.load("../../data/statistics/ron1_0_128.npy").astype(np.float32))
+    ron1 = torch.Tensor(np.load("../../data/statistics/ron1_1_128.npy").astype(np.float32))
 
 
 
@@ -136,22 +151,7 @@ def train(nz=20, training_s="1619", mode_eq="log"):
         new = logeq2(new)
         return new
         
-        
-
-    # Number of workers for dataloader
-    workers = 2
-
-    # Batch size during training
-    batch_size = 64
-
-    # Spatial size of training images. All images will be resized to this
-    # size using a transformer if needed.
-    image_size = 128
-
-    # Number of GPUs available. Use 0 for CPU mode.
-    ngpu = 1
-
-
+   
 
     # Check the choice of the equalization
     white_gen = (mode_eq == "white")
@@ -185,10 +185,6 @@ def train(nz=20, training_s="1619", mode_eq="log"):
     # Create the dataloader
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=workers)
                                                                                     
-    # Decide which device we want to run on
-    device = torch.device("cuda:0" if (torch.cuda.is_available() and ngpu > 0) else "cpu")
-
-    print("Device : ", device)
     wgan.train(dataloader)
 
     wgan.plot_losses()
@@ -200,7 +196,8 @@ def get_args():
     parser.add_argument('--nz', type=int, default=20, help='Number of latent dimensions')
     parser.add_argument('--training_s', type=str, default="1619", help='Training set (1617/1619/1719)')
     parser.add_argument('--mode_eq', type=str, default="log", help='Equalization (white/log)')
-
+    
+    return parser.parse_args()
 
 if __name__ == '__main__':
     args = get_args()
