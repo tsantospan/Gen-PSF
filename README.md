@@ -49,22 +49,26 @@ This folder contains the statistics that are used for noise simulation.
 We provide the PSF that are used for the application with PSF denoising, in Section 5. The given PSF corresponds to observations of  PDS 70, SAO 206462, HIP 72192 and HIP 80019.
 
 ## Folder **models**
-We provide examples of trained generators that were used to obtain results presented in the article, in Section 5.
-All four generators provided were trained with the K12 training set. Two of them were trained on whitened images, with 10 latent dimensions, and the two others on log-equalized images, with 20 latent dimensions. For each training configuration, we provide two different generators trained at different times, identified by the year of the training (2024 or 2025).
+We provide examples of trained generators.
+Four of the generators provided were trained with the K12 training set; they were used to obtain results presented in the article, in Section 5. Two of them were trained on whitened images, with 10 latent dimensions, and the two others on log-equalized images, with 20 latent dimensions. For each training configuration, we provide two different generators trained at different times, identified by the year of the training (2024 or 2025).
+The two last generators were trained with the H23 training set of PSF from 2016 to 2017, with 20 latent dimensions, with log-equalized or whitened images.
+
+The models' names follow the structure : `generator$1_$2_train$3_nlat$4_$5.pkl`, where $1 is the filters of the training set, $2 the year of training, $3 the years of acquisition of the measured PSF, $4 the latent dimensionality and $5 the equalization for the training. 
 
 ## Folder **code**
 The first subfolder *training* contains two files : 
 - *wgan_gradient_penalty.py*, which defines the class for the WGAN
 - *training_wgan.py* which is used to train the neural network. This script has three possible arguments : 
   - nz : the latent dimensionality required
-  - training_s : the training set (1617 for H2 and H3 filters from years 2016 and 2017, 1619 for H2 and H3 filters from years 2016 to 2019,1719 for K1 and K2 filters from years 2017 to 2019)
+  - training_s : the training set (1617 for H2 and H3 filters from years 2016 and 2017, 1619 for H2 and H3 filters from years 2016 to 2019, 1719 for K1 and K2 filters from years 2017 to 2019)
   - mode_eq : the equalization (white or log)
   
   Example use : `python3 training_wgan.py --nz 20 --training_s 1619 --mode_eq white`
 The code in this folder is adapted from the WGAN-GP implementation in [this repo]( git@github.com:Zeleni9/pytorch-wgan.git).
 
 
-The second subfolder contains *Denoise_PSF.ipynb*, a notebook to illustrate the denoising with the generator. It works with the PSF presented in Section of the article, observed with K1 and K2 filters, with one or two frames. *Denoise_PSF_img_test.ipynb* presents a simpler denoising with a randomly chosen PSF from the test set.
+The second subfolder contains two notebooks to illustrate the denoising with the generator. 
+*Denoise_PSF_article.ipynb* works with the PSF presented in Section 5 of the article, observed with K1 and K2 filters, with one or two frames. *Denoise_PSF_img_test.ipynb* presents a simpler denoising with a randomly chosen PSF from the test sets; it works with any of the models available in the models folder.
 
 ## Folder **results**
 We provide here already computed results of PSF denoising. They are the denoised PSF that are presented in the article in Section 5. There is one folder for each corresponding obersved object (PDS 70, SAO 206462, HIP 72192 and HIP 80019). In each folder there are two subfolders corresponding to the denoising obtained with a generator trained with either whitened PSF or log-equalized PSF. In each subfolder, we show the PSF denoised with either the generator trained in 2024 or 2025, or a zoom on the 64 $\times$ 64 pixels at the center.
