@@ -21,7 +21,10 @@ More details will be provided.
 
 Part of the raw data is directly stored in the repo, because of the small volumes it takes. It is the case for the statistics of the PSF (used for noise simulation and equalization).
 
-The rest of raw data (training and test sets, already trained generators that are used in the article, examples of real PSF and their denoised counterparts seen in the article) must be downloaded with the script `'download_data.sh`.
+The rest of raw data (training and test sets, already trained generators that are used in the article, examples of real PSF and their denoised counterparts seen in the article) must be downloaded with the script _download_data.sh_.
+
+## Python requirements
+The codes require the libraries _matplotlib_, _numpy_, _scipy_, _pytorch_ (and _astropy_ for one notebook only). All versions are indicated in the root file _requirement.txt_.
 
 ## Folder **data** 
 ### Subfolder *sets*
