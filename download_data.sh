@@ -38,7 +38,7 @@ echo "Datasets of PSF downloaded and unpacked"
 
 
 ## Trained models
-URL="https://zenodo.org/record/18336187/files/models.zip"
+URL="https://zenodo.org/record/18417575/files/models.zip"
 DEST="models.zip"
 
 wget -O "$DEST" "$URL"
