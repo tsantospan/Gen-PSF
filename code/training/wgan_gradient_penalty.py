@@ -447,15 +447,22 @@ class WGAN_GP(object):
     def load_model(self, D_model_filename, G_model_filename):
         D_model_path = os.path.join(os.getcwd(), D_model_filename)
         G_model_path = os.path.join(os.getcwd(), G_model_filename)
-        self.D.load_state_dict(torch.load(D_model_path))
-        self.G.load_state_dict(torch.load(G_model_path))
+        if torch.cuda.is_available():
+            self.D.load_state_dict(torch.load(D_model_path))
+            self.G.load_state_dict(torch.load(G_model_path))
+        else:
+            self.D.load_state_dict(torch.load(D_model_path))
+            self.G.load_state_dict(torch.load(G_model_path))
         print('Generator model loaded from {}.'.format(G_model_path))
         print('Discriminator model loaded from {}-'.format(D_model_path))
     
     # If I want to load only G (to not waste RAM when we use it after training)
     def load_model_G(self, G_model_filename):
         G_model_path = os.path.join(os.getcwd(), G_model_filename)
-        self.G.load_state_dict(torch.load(G_model_path))
+        if torch.cuda.is_available():
+            self.G.load_state_dict(torch.load(G_model_path))
+        else:
+            self.G.load_state_dict(torch.load(G_model_path))
         print('Generator model loaded from {}.'.format(G_model_path))
 
     # Manage batches
