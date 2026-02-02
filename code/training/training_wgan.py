@@ -170,7 +170,7 @@ def train(nz=20, training_s="1619", mode_eq="log"):
     else:
         suite_name_model = "_H23" + suite_name_model
 
-    wgan = WGAN_GP(nb_channels=1, cud=(device="cuda:0"), nb_gen_iter=20000, name_suite=suite_name_model, n_latent=nz, noiser=noiser, eq=eq, uneq=uneq, white=white_gen)
+    wgan = WGAN_GP(nb_channels=1, cud=(device=="cuda:0"), nb_gen_iter=20000, name_suite=suite_name_model, n_latent=nz, noiser=noiser, eq=eq, uneq=uneq, white=white_gen)
 
     # Create the dataset
     dataset = dset.ImageFolder(root=dataroot,
