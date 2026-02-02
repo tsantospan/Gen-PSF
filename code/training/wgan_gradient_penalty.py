@@ -451,8 +451,8 @@ class WGAN_GP(object):
             self.D.load_state_dict(torch.load(D_model_path))
             self.G.load_state_dict(torch.load(G_model_path))
         else:
-            self.D.load_state_dict(torch.load(D_model_path))
-            self.G.load_state_dict(torch.load(G_model_path))
+            self.D.load_state_dict(torch.load(D_model_path, map_location=torch.device("cpu")))
+            self.G.load_state_dict(torch.load(G_model_path, map_location=torch.device("cpu")))
         print('Generator model loaded from {}.'.format(G_model_path))
         print('Discriminator model loaded from {}-'.format(D_model_path))
     
@@ -462,7 +462,7 @@ class WGAN_GP(object):
         if torch.cuda.is_available():
             self.G.load_state_dict(torch.load(G_model_path))
         else:
-            self.G.load_state_dict(torch.load(G_model_path))
+            self.G.load_state_dict(torch.load(G_model_path, map_location=torch.device("cpu")))
         print('Generator model loaded from {}.'.format(G_model_path))
 
     # Manage batches
