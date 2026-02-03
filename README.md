@@ -70,8 +70,10 @@ The first subfolder *training* contains two files :
 The code in this folder is adapted from the WGAN-GP implementation in [this repo]( git@github.com:Zeleni9/pytorch-wgan.git).
 
 
-The second subfolder contains two notebooks to illustrate the denoising with the generator. 
-*Denoise_PSF_article.ipynb* works with the PSF presented in Section 5 of the article, observed with K1 and K2 filters, with one or two frames. *Denoise_PSF_img_test.ipynb* presents a simpler denoising with a randomly chosen PSF from the test sets; it works with any of the models available in the models folder.
+The second subfolder contains two notebooks to illustrate the denoising with the generator :
+
+- *Denoise_PSF_article.ipynb* works with the PSF presented in Section 5 of the article, observed with K1 and K2 filters, with one or two frames. It is the notebook that was used to denoise the PSf in the same Section.
+- *Denoise_PSF_img_test.ipynb* presents a simpler denoising with a randomly chosen PSF from the test sets; it works with any of the models available in the models folder. It is possible to choose randomly among a selection of test PSF with strong aberration.
 
 ## Folder **results**
 We provide here already computed results of PSF denoising. They are the denoised PSF that are presented in the article in Section 5. There is one folder for each corresponding obersved object (PDS 70, SAO 206462, HIP 72192 and HIP 80019). In each folder there are two subfolders corresponding to the denoising obtained with a generator trained with either whitened PSF or log-equalized PSF. In each subfolder, we show the PSF denoised with either the generator trained in 2024 or 2025, or a zoom on the 64 $\times$ 64 pixels at the center.
