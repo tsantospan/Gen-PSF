@@ -16,7 +16,7 @@ rm "$DEST"
 echo "Observations of PSF downloaded and unpacked"
 
 # The denoised PSF
-URL="https://zenodo.org/record/18329242/files/results.zip.zip"
+URL="https://zenodo.org/record/18329242/files/results.zip"
 DEST="res.zip"
 
 wget -O "$DEST" "$URL"
